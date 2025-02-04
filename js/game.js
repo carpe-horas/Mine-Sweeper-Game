@@ -7,7 +7,7 @@ document.addEventListener("mousedown", (event) => {
     if (event.button === 0) isLeftMouseDown = true;  // 왼쪽 버튼
     if (event.button === 2) isRightMouseDown = true; // 오른쪽 버튼
 
-    // 💡 왼쪽+오른쪽 클릭을 동시에 감지하면 힌트 기능 실행
+    // 왼쪽+오른쪽 클릭을 동시에 감지하면 힌트 기능 실행
     if (isLeftMouseDown && isRightMouseDown) {
         let target = event.target;
         let row = parseInt(target.dataset.row);
@@ -36,13 +36,13 @@ function handleHintReveal(row, col) {
     let adjacentFlags = countAdjacentFlags(row, col);
     let mineCount = countAdjacentMines(row, col);
 
-    // ✅ 깃발 개수 == 숫자일 때, 주변 안전한 칸 자동 오픈
+    // 깃발 개수 == 숫자일 때, 주변 안전한 칸 자동 오픈
     if (adjacentFlags === mineCount) {
         revealAdjacentCells(row, col);
     }
 }
 
-// 🔢 주변 깃발 개수 계산
+// 주변 깃발 개수 계산
 function countAdjacentFlags(row, col) {
     let count = 0;
     for (let i = -1; i <= 1; i++) {
@@ -56,7 +56,7 @@ function countAdjacentFlags(row, col) {
     return count;
 }
 
-// 🔢 주변 지뢰 개수 계산
+// 주변 지뢰 개수 계산
 function countAdjacentMines(row, col) {
     let count = 0;
     for (let i = -1; i <= 1; i++) {
@@ -70,17 +70,17 @@ function countAdjacentMines(row, col) {
     return count;
 }
 
-// 🎮 셀 클릭 이벤트 핸들러 (일반 클릭)
+// 셀 클릭 이벤트 핸들러 (일반 클릭)
 function handleCellClick(event) {
     let row = parseInt(event.target.dataset.row);
     let col = parseInt(event.target.dataset.col);
 
     let cell = board[row][col];
 
-    // 💥 지뢰를 밟은 경우
+    // 지뢰를 밟은 경우
     if (cell.mine) {
         revealAllCells();
-        alert("💥 지뢰를 밟았습니다! 당신은 죽었습니다.");
+        alert("💥 지뢰를 밟았습니다! 당신은 가루가 되었습니다.");
         return;
     } else {
         revealCell(row, col);
@@ -88,7 +88,7 @@ function handleCellClick(event) {
     }
 }
 
-// 🚩 오른쪽 클릭 이벤트 핸들러 (깃발)
+// 오른쪽 클릭 이벤트 핸들러 (깃발)
 function handleRightClick(event) {
     event.preventDefault();
     let row = parseInt(event.target.dataset.row);
@@ -101,7 +101,7 @@ function handleRightClick(event) {
     }
 }
 
-// 🔥 셀 공개 함수 (숫자 & 빈 칸 처리)
+// 셀 공개 함수 (숫자 & 빈 칸 처리)
 function revealCell(row, col) {
     let cell = board[row][col];
     if (cell.revealed || cell.flag) return;
@@ -118,7 +118,7 @@ function revealCell(row, col) {
     }
 }
 
-// 🏗️ 인접한 빈 칸 자동 공개
+// 인접한 빈 칸 자동 공개
 function revealAdjacentCells(row, col) {
     for (let i = -1; i <= 1; i++) {
         for (let j = -1; j <= 1; j++) {
@@ -132,7 +132,7 @@ function revealAdjacentCells(row, col) {
     }
 }
 
-// 🏆 승리 조건 체크 (모든 안전한 칸을 열면 다음 레벨로)
+// 승리 조건 체크 (모든 안전한 칸을 열면 다음 레벨로)
 function checkWinCondition() {
     let unrevealedCells = board.flat().filter(cell => !cell.revealed);
     if (unrevealedCells.length === mineCount) {
@@ -141,7 +141,7 @@ function checkWinCondition() {
     }
 }
 
-// 🔥 다음 레벨로 이동
+// 다음 레벨로 이동
 function nextLevel() {
     if (currentLevel < 20) {
         currentLevel++;
@@ -152,7 +152,7 @@ function nextLevel() {
     resetGame();
 }
 
-// 💥 게임 오버 시 모든 보드 공개
+// 게임 오버 시 모든 보드 공개
 function revealAllCells() {
     board.forEach((row, rowIndex) => {
         row.forEach((cell, colIndex) => {
@@ -170,7 +170,7 @@ function revealAllCells() {
     });
 }
 
-// 🎮 게임 초기화
+// 게임 초기화
 function resetGame() {
     initBoard();
 }

@@ -2,35 +2,77 @@
 body {
     font-family: Arial, sans-serif;
     text-align: center;
-    background-color: #eee;
+    background: linear-gradient(135deg, #fad5f0 10%, #acb6e5 50%, #94ecf8 90%);
+
+    min-height: 70vh; /* 🔥 최소 높이만 설정 (고정 X) */
+    background-attachment: fixed; /* 배경이 고정됨 */
+    display: flex;
+    flex-direction: column; /* 🔥 요소를 세로 정렬 */
+    justify-content: center; /* 🔥 중앙 정렬 */
+    align-items: center; /* 🔥 가운데 정렬 */
+    margin: 0;
 }
+
 
 /* 게임 컨테이너 */
 #game-container {
-    margin: 80px auto;
-    width: 300px;
+    margin: 40px auto;
     background: white;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: auto;
+    transition: all 0.3s ease-in-out;
 }
+
+/* 🏆 게임 제목 */
+h1 {
+    font-size: 28px;
+    font-weight: bold;
+    color: #41075c;
+    text-shadow: 2px 2px 3px rgba(56, 54, 56, 0.2);
+}
+
+#level-display {
+    color: #41075c; /* 🔥 레벨 글씨 색상을 명확하게 지정 */
+    font-size: 22px;
+    font-weight: bold;
+}
+
+
+/* 📌 게임 정보 (레벨, 지뢰 수) */
+#game-info {
+    color: #41075c;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    width: 90%;
+    margin-bottom: 15px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
 
 /* 게임 보드 */
 #board {
     display: grid;
-    gap: 2px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    margin-left: auto;
-    margin-right: auto;
+    gap: 4px;
+    margin-top: 15px;
     justify-content: center;
+    background: #9fcadd;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 /* 셀 스타일 */
 .cell {
     width: 30px;
     height: 30px;
-    background-color: #969494;
+    background-color: #21a1d0;
     text-align: center;
     line-height: 30px;
     font-size: 20px;
@@ -41,16 +83,40 @@ body {
     justify-content: center;
 }
 
+/* 🔥 셀을 클릭했을 때 */
+.cell.pressed {
+    transform: scale(0.95);
+}
+
 .cell.revealed {
-    background-color: #e2e1e1;
+    background-color: rgb(187, 230, 249);
     cursor: default;
 }
 
 .cell.mine {
-    background-color: red;
+    background: #e74c3c;
+    color: white;
+    font-size: 25px;
 }
 
 .cell.flag {
-    color: red;
+    color: #e84118;
+    font-size: 25px;
 }
 
+#reset-btn {
+    background: #9acced;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 5px 5px 5px 5px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
+}
+
+#reset-btn:hover {
+    background: #18bae7;
+    transform: scale(1.05);
+}

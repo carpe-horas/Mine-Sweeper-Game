@@ -3,7 +3,7 @@ let boardSize = 8;   // 기본 보드 크기
 let mineCount = 2;    // 기본 지뢰 개수
 let board = [];       // 보드 배열
 
-// 🔥 레벨별 보드 크기 및 지뢰 개수 설정
+// 레벨별 보드 크기 및 지뢰 개수 설정
 // function updateLevelSettings() {
 //     if (currentLevel <= 5) {  // 1~5레벨: 8x8 보드
 //         boardSize = 8;
@@ -18,10 +18,10 @@ let board = [];       // 보드 배열
 //         boardSize = 14;
 //         mineCount = 8 + (currentLevel - 16) * 2;
 //     }
-//     console.log(`🔄 레벨 ${currentLevel}: ${boardSize}x${boardSize}, 지뢰 ${mineCount}개`);
+//     console.log(`레벨 ${currentLevel}: ${boardSize}x${boardSize}, 지뢰 ${mineCount}개`);
 // }
 
-// 🔥 자동으로 보드 크기와 지뢰 개수를 조정
+// 자동으로 보드 크기와 지뢰 개수를 조정
 function updateLevelSettings() {
     let levelGroup = Math.floor((currentLevel - 1) / 5); // 5레벨 단위 그룹 (0부터 시작)
     
@@ -34,10 +34,21 @@ function updateLevelSettings() {
     console.log(`🔄 레벨 ${currentLevel}: ${boardSize}x${boardSize}, 지뢰 ${mineCount}개`);
 }
 
+function updateGameContainerSize() {
+    const gameContainer = document.getElementById("game-container");
 
-// 🔄 보드 초기화 함수 (레벨별 설정 적용)
+    // 보드 크기 계산 (셀 크기: 30px)
+    let newWidth = boardSize * 30 + 40; // 보드 크기 + 좌우 마진 (20px * 2)
+
+    gameContainer.style.width = `${newWidth}px`;
+    gameContainer.style.marginBottom = "20px"; // 아래 마진 추가
+}
+
+
+// 보드 초기화 함수 (레벨별 설정 적용)
 function initBoard() {
     updateLevelSettings(); // 레벨에 맞게 보드 크기 & 지뢰 개수 변경
+    updateGameContainerSize(); // 게임 컨테이너 크기 업데이트
 
     board = Array.from({ length: boardSize }, () => 
         Array.from({ length: boardSize }, () => ({ mine: false, revealed: false, flag: false }))
@@ -47,7 +58,8 @@ function initBoard() {
     renderBoard();
 }
 
-// 💣 지뢰 배치 함수
+
+// 지뢰 배치 함수
 function placeMines() {
     let placedMines = 0;
     while (placedMines < mineCount) {
@@ -60,15 +72,18 @@ function placeMines() {
     }
 }
 
-// 🔄 보드 렌더링 함수 (레벨 표시 추가)
+// 보드 렌더링 함수 (레벨 & 지뢰 개수 표시)
 function renderBoard() {
     const boardElement = document.getElementById("board");
-    const levelElement = document.getElementById("level-display"); // 레벨 표시
+    const levelElement = document.getElementById("level-display"); 
+    const mineCountElement = document.getElementById("mine-count"); 
 
     boardElement.innerHTML = "";
     boardElement.style.gridTemplateColumns = `repeat(${boardSize}, 30px)`;
+    boardElement.style.gridTemplateRows = `repeat(${boardSize}, 30px)`;
 
-    levelElement.textContent = `레벨 ${currentLevel}`; // 화면에 레벨 표시
+    levelElement.textContent = `[레벨 ${currentLevel}]`; 
+    mineCountElement.textContent = mineCount; // 지뢰 개수 표시 업데이트
 
     board.forEach((row, rowIndex) => {
         row.forEach((cell, colIndex) => {
@@ -82,5 +97,8 @@ function renderBoard() {
         });
     });
 
-    console.log(`🟢 보드 렌더링 완료: ${boardSize}x${boardSize}, 지뢰 ${mineCount}개`);
+    // 게임 컨테이너 크기 업데이트
+    updateGameContainerSize();
+
+    console.log(`보드 렌더링 완료: ${boardSize}x${boardSize}, 지뢰 ${mineCount}개`);
 }
