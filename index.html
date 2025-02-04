@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>지뢰찾기 게임</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <div id="game-container">
+        <h1>지뢰찾기</h1>
+        <h2 id="level-display">레벨 1</h2>
+        <div id="game-info">
+            <span>지뢰: <span id="mine-count">10</span></span>
+            <button id="reset-btn">🔁</button>
+        </div>
+        <div id="board"></div>
+    </div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/board.js"></script>
+    <script src="js/game.js"></script>
+</body>
+</html>
