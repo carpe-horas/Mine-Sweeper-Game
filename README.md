@@ -3,7 +3,6 @@
 레벨에 따라 보드 크기와 지뢰 개수가 증가하여 게임이 진행될수록 난이도가 점점 높아지는 구조입니다.  
 <br>
 ***[지뢰찾기게임 하러가기 Click!](https://carpe-horas.github.io/Mine-Sweeper-Game/)***  
-<br>
 
 ## 주요 기능
 - **레벨 시스템**: 레벨이 올라갈수록 보드 크기와 지뢰 개수 증가
@@ -11,9 +10,11 @@
 - **깔끔한 UI**: 그라디언트 배경, 입체적인 셀 디자인 적용
 - **게임 재시작 기능**: 리셋 버튼 클릭 시 새로운 게임 시작  
 <br>
-![Mine Sweeper Game](images/game.png)  
-<br>
 
+![Mine Sweeper Game](images/game.png)
+  
+<br>
+  
 ## 게임 로직 및 알고리즘
 
 #### 1. 무작위 지뢰 배치 (Random Placement)
