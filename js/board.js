@@ -23,10 +23,11 @@ let board = [];       // 보드 배열
 
 // 자동으로 보드 크기와 지뢰 개수를 조정
 function updateLevelSettings() {
-    let levelGroup = Math.floor((currentLevel - 1) / 5); // 5레벨 단위 그룹 (0부터 시작)
+    let levelGroup = Math.floor((currentLevel - 1) / 5); // 5레벨 단위 그룹
     
     boardSize = 8 + levelGroup * 2; // 5레벨마다 보드 크기 증가
-    let baseMineCount = 2 + levelGroup * 2; // 각 그룹의 지뢰 시작 개수 (2, 4, 6, 8, ...)
+    
+    let baseMineCount = 4 + levelGroup * 4; // 5레벨마다 4씩 증가(1레벨: 4개, 6레벨: 8개, 11레벨: 12개)
     let levelOffset = (currentLevel - 1) % 5; // 그룹 내에서 몇 번째 레벨인지 (0~4)
     
     mineCount = baseMineCount + levelOffset * 2; // 2씩 증가
@@ -37,25 +38,31 @@ function updateLevelSettings() {
 function updateGameContainerSize() {
     const gameContainer = document.getElementById("game-container");
 
+    // 기본 보드 크기(8x8)에서 증가하는 칸 수를 계산
+    let levelGroup = Math.floor((currentLevel - 1) / 5); // 5레벨마다 크기 증가 그룹
+    let extraMargin = levelGroup * 10; // 레벨 그룹마다 추가 마진 (10px씩 증가)
+
     // 보드 크기 계산 (셀 크기: 30px)
-    let newWidth = boardSize * 30 + 40; // 보드 크기 + 좌우 마진 (20px * 2)
+    let newWidth = boardSize * 30 + 40 + extraMargin; // 좌우 마진 반영하여 계산
 
     gameContainer.style.width = `${newWidth}px`;
-    gameContainer.style.marginBottom = "20px"; // 아래 마진 추가
+    gameContainer.style.margin = "40px auto"; // 중앙 정렬 유지
 }
-
 
 // 보드 초기화 함수 (레벨별 설정 적용)
 function initBoard() {
     updateLevelSettings(); // 레벨에 맞게 보드 크기 & 지뢰 개수 변경
     updateGameContainerSize(); // 게임 컨테이너 크기 업데이트
 
-    board = Array.from({ length: boardSize }, () => 
+    board = Array.from({ length: boardSize }, () =>
         Array.from({ length: boardSize }, () => ({ mine: false, revealed: false, flag: false }))
     );
 
     placeMines();
     renderBoard();
+
+    gameActive = true; // 게임 시작 상태 활성화
+    startTimer(); //게임 시작 시 타이머 실행
 }
 
 

@@ -2,6 +2,27 @@ let isLeftMouseDown = false;
 let isRightMouseDown = false;
 let hintTimeout = null;  // 마우스 동시 클릭 감지를 위한 타이머
 
+let timer = 0; // 게임 시간 (초)
+let timerInterval = null; // 타이머 인터벌 저장
+let gameActive = false; // 게임 진행 여부
+
+// 타이머 시작 함수
+function startTimer() {
+    if (timerInterval) clearInterval(timerInterval); // 기존 타이머 초기화
+    timer = 0;
+    document.getElementById("timer").textContent = timer;
+    timerInterval = setInterval(() => {
+        timer++;
+        document.getElementById("timer").textContent = timer;
+    }, 1000);
+}
+
+// 타이머 정지 함수
+function stopTimer() {
+    clearInterval(timerInterval);
+    timerInterval = null;
+}
+
 // 마우스 버튼 상태 감지 (누를 때)
 document.addEventListener("mousedown", (event) => {
     if (event.button === 0) isLeftMouseDown = true;  // 왼쪽 버튼
@@ -72,15 +93,23 @@ function countAdjacentMines(row, col) {
 
 // 셀 클릭 이벤트 핸들러 (일반 클릭)
 function handleCellClick(event) {
+    if (!gameActive) return; // 게임이 종료된 경우 클릭 방지
+
     let row = parseInt(event.target.dataset.row);
     let col = parseInt(event.target.dataset.col);
-
     let cell = board[row][col];
+
+    // 첫 클릭 시 타이머 시작
+    if (timer === 0 && !timerInterval) {
+        startTimer();
+    }
 
     // 지뢰를 밟은 경우
     if (cell.mine) {
         revealAllCells();
-        alert("💥 지뢰를 밟았습니다! 당신은 가루가 되었습니다.");
+        stopTimer();
+        gameActive = false;
+        alert(`💥 지뢰를 밟았습니다! ${timer}초 만에 당신은 가루가 되었습니다.`);
         return;
     } else {
         revealCell(row, col);
@@ -136,7 +165,8 @@ function revealAdjacentCells(row, col) {
 function checkWinCondition() {
     let unrevealedCells = board.flat().filter(cell => !cell.revealed);
     if (unrevealedCells.length === mineCount) {
-        alert(`🎉 레벨 ${currentLevel} 클리어! 다음 레벨로 이동합니다.`);
+        stopTimer(); // 승리 시 타이머 정지
+        alert(`🎉 레벨 ${currentLevel} 클리어! ${timer}초 소요됨. 다음 레벨로 이동합니다.`);
         nextLevel();
     }
 }
@@ -146,8 +176,8 @@ function nextLevel() {
     if (currentLevel < 20) {
         currentLevel++;
     } else {
-        alert("🎊 축하합니다! 모든 레벨을 클리어했습니다!");
-        currentLevel = 1; // 처음부터 다시 시작
+        alert(`🎊 축하합니다! 레벨을 클리어했습니다! 총 ${timer}초 소요됨.`);
+        currentLevel = 1;
     }
     resetGame();
 }
@@ -170,11 +200,65 @@ function revealAllCells() {
     });
 }
 
-// 게임 초기화
+// 게임 초기화 (리셋 버튼 클릭 시)
 function resetGame() {
-    initBoard();
+    stopTimer();  // 타이머 정지 및 초기화
+    initBoard();  // 보드 초기화
 }
 
 // 초기 실행
 document.getElementById("reset-btn").addEventListener("click", resetGame);
 initBoard();
+
+
+
+/* ──────────────────────────────────────────────── */
+/* 치트키 기능
+/* ──────────────────────────────────────────────── */
+
+// 키보드 이벤트 감지 (치트키 설정)
+document.addEventListener("keydown", (event) => {
+    if (event.shiftKey && event.key === "D") { 
+        cheatNextLevel(); // 다음 레벨로 이동
+    } else if (event.shiftKey && event.key === "A") {
+        cheatPreviousLevel(); // 이전 레벨로 이동
+    } else if (event.shiftKey && event.key === "S") {
+        cheatRevealMines(); // 지뢰 표시 토글
+    }
+});
+
+// 치트키: 다음 레벨로 이동 (Shift + D)
+function cheatNextLevel() {
+    alert(`치트 활성화! 레벨 ${currentLevel} → ${currentLevel + 1}`);
+    currentLevel++; 
+    resetGame();
+}
+
+// 치트키: 이전 레벨로 이동 (Shift + A)
+function cheatPreviousLevel() {
+    if (currentLevel > 1) {
+        alert(`⏪ 치트 활성화! 레벨 ${currentLevel} → ${currentLevel - 1}`);
+        currentLevel--;
+        resetGame();
+    } else {
+        alert("🚫 첫 번째 레벨입니다!");
+    }
+}
+
+// 치트키: 모든 지뢰 표시 (Shift + S)
+let minesRevealed = false;
+function cheatRevealMines() {
+    minesRevealed = !minesRevealed;
+
+    board.forEach((row, rowIndex) => {
+        row.forEach((cell, colIndex) => {
+            let cellElement = document.querySelector(`[data-row="${rowIndex}"][data-col="${colIndex}"]`);
+            if (cell.mine) {
+                cellElement.textContent = minesRevealed ? "💣" : ""; // 지뢰 표시 or 숨김
+                cellElement.classList.toggle("mine", minesRevealed);
+            }
+        });
+    });
+
+    alert(minesRevealed ? "💣 지뢰 표시 활성화!" : "❌ 지뢰 숨김 모드!");
+}

@@ -4,12 +4,12 @@ body {
     text-align: center;
     background: linear-gradient(135deg, #fad5f0 10%, #acb6e5 50%, #94ecf8 90%);
 
-    min-height: 70vh; /* 🔥 최소 높이만 설정 (고정 X) */
-    background-attachment: fixed; /* 배경이 고정됨 */
+    min-height: 70vh; /* 최소 높이만 설정 (고정 X) */
+    background-attachment: fixed; /* 배경 고정 */
     display: flex;
-    flex-direction: column; /* 🔥 요소를 세로 정렬 */
-    justify-content: center; /* 🔥 중앙 정렬 */
-    align-items: center; /* 🔥 가운데 정렬 */
+    flex-direction: column; /* 세로 정렬 */
+    justify-content: center; 
+    align-items: center; /* 가운데 정렬 */
     margin: 0;
 }
 
@@ -25,6 +25,7 @@ body {
     flex-direction: column;
     align-items: center;
     width: auto;
+    max-width: 95vw; 
     transition: all 0.3s ease-in-out;
 }
 
@@ -37,18 +38,19 @@ h1 {
 }
 
 #level-display {
-    color: #41075c; /* 🔥 레벨 글씨 색상을 명확하게 지정 */
+    color: #41075c; 
     font-size: 22px;
     font-weight: bold;
 }
 
 
-/* 📌 게임 정보 (레벨, 지뢰 수) */
+/* 게임 정보 (지뢰 개수, 타이머, 리셋 버튼) */
 #game-info {
     color: #41075c;
     display: flex;
     justify-content: center;
-    gap: 15px;
+    align-items: center;
+    gap: 30px;
     width: 90%;
     margin-bottom: 15px;
     font-size: 18px;
@@ -83,7 +85,7 @@ h1 {
     justify-content: center;
 }
 
-/* 🔥 셀을 클릭했을 때 */
+/* 셀 클릭했을 때 */
 .cell.pressed {
     transform: scale(0.95);
 }
@@ -107,11 +109,14 @@ h1 {
 #reset-btn {
     background: #9acced;
     color: white;
-    font-size: 18px;
+    font-size: 15px;
     font-weight: bold;
     padding: 5px 5px 5px 5px;
     border: none;
     border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
     transition: background 0.2s ease-in-out;
 }
