@@ -4,17 +4,17 @@
 <br>
 ***[지뢰찾기게임 하러가기 Click!](https://carpe-horas.github.io/Mine-Sweeper-Game/)***  
 
+![Mine Sweeper Game](images/game.png)  
+
+<br>
+
 ## 주요 기능
 - **레벨 시스템**: 레벨이 올라갈수록 보드 크기와 지뢰 개수 증가
 - **지뢰 찾기 기능**: 우클릭(마우스 오른쪽 버튼)으로 깃발 표시 가능
 - **깔끔한 UI**: 그라디언트 배경, 입체적인 셀 디자인 적용
 - **게임 재시작 기능**: 리셋 버튼 클릭 시 새로운 게임 시작  
 <br>
-
-![Mine Sweeper Game](images/game.png)
-  
-<br>
-  
+ 
 ## 게임 로직 및 알고리즘
 
 #### 1. 무작위 지뢰 배치 (Random Placement)
@@ -38,7 +38,9 @@
 <br>
 
 ## 사용 기술
-- HTML, CSS, JavaScript  
+![HTML](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)  
 <br>
 
 ## 📂 폴더 구조
@@ -53,16 +55,4 @@
  ├── 📄 index.html
  └── 📄 README.md
  ```
-<br>
-
-## 실행 방법
-```bash
-# 1. 프로젝트 클론
-git clone https://github.com/사용자이름/Mine-Sweeper-Game.git
-
-# 2. 프로젝트 폴더로 이동
-cd Mine-Sweeper-Game
-
-# 3. index.html을 브라우저에서 열기
-```
 <br>
