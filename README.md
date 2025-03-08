@@ -4,7 +4,7 @@
 <br>
 ***[지뢰찾기게임 하러가기 Click!](https://carpe-horas.github.io/Mine-Sweeper-Game/)***  
 
-![Mine Sweeper Game](images/game.png)  
+![Mine Sweeper Game](images/game.gif)  
 
 <br>
 
